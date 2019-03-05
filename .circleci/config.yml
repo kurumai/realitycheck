@@ -29,7 +29,7 @@ contexts_defaults: &contexts_defaults
 
 workspaces_defaults: &workspaces_defaults
   docker: [{image: 'circleci/node:latest'}]
-  working_directory: ~/foo/bar
+  working_directory: ~/tmp/workspace
 
 jobs:
   # resource class jobs
@@ -56,6 +56,7 @@ jobs:
   # vm jobs
   machine:
     machine: true
+    working_directory: /tmp/workspace/machine
     steps:
       - run: |
           echo $SLEEP
@@ -63,6 +64,8 @@ jobs:
           sleep $SLEEP
           date
           echo 'Done sleeping.'
+      -run: |
+          echo 'machine works fine!' > result.txt
       - store_artifacts:
           path: /tmp/workspace/machine
       - persist_to_workspace:
@@ -135,6 +138,7 @@ jobs:
 
   read_workspace:
     <<: *workspaces_defaults
+    working_directory: /tmp/workspace/machine
     steps:
       - attach_workspace:
            at: ./attached
@@ -202,13 +206,13 @@ jobs:
 
 workflows:
   version: 2
-  resource_class_jobs:
-    jobs:
-      - small
-      - medium
-      - medium+
-      - large
-      - xlarge
+#  resource_class_jobs:
+#    jobs:
+#      - small
+#      - medium
+#      - medium+
+#      - large
+#      - xlarge
 
   vm_jobs:
     jobs:
@@ -228,15 +232,15 @@ workflows:
             - docker_layer_caching
             - machine_dlc
 
-  feature_jobs:
-    jobs:
-      - save_and_restore_cache
-      - contexts:
-          context: org-global
-      - multi-contexts:
-          context: individual-local
-      - write_workspace
-      - read_workspace:
-          requires:
-            - write_workspace
-      - artifacts_test_results
+#  feature_jobs:
+#    jobs:
+#      - save_and_restore_cache
+#      - contexts:
+#          context: org-global
+#      - multi-contexts:
+#          context: individual-local
+#      - write_workspace
+#      - read_workspace:
+#          requires:
+#            - write_workspace
+#      - artifacts_test_results
