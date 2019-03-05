@@ -65,6 +65,9 @@ jobs:
       - run: docker version
       - run:
           echo -e 'export REMOTE_DOCKER = green\n' >> results.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths: .
 
   docker_layer_caching:
     <<: *remote_docker_defaults
@@ -81,6 +84,9 @@ jobs:
       - run: docker version
       - run:
           echo -e 'export DOCKER_LAYER_CACHING = green\n' >> results.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths: .
 
   machine_dlc:
     machine:
@@ -95,6 +101,9 @@ jobs:
       - run: docker version
       - run:
           echo -e 'export MACHINE_DLC = green\n' >> results.txt
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths: .
 
   vm_jobs_message:
     docker:
