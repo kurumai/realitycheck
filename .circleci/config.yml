@@ -58,8 +58,8 @@ jobs:
     machine: true
     steps:
       - persist_to_workspace:
-        root: /tmp/workspace
-        paths: - .
+          root: /tmp/workspace
+          paths: - .
       - run: |
           echo $SLEEP
           date
@@ -67,7 +67,7 @@ jobs:
           date
           echo 'Done sleeping.'
       - store_artifacts:
-        path: /tmp/workspace/machine
+          path: /tmp/workspace/machine
     environment:
       SLEEP: 1
 
