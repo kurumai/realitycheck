@@ -59,7 +59,7 @@ jobs:
     steps:
       - persist_to_workspace:
         root: /tmp/workspace
-        path: - .
+        paths: - .
       - run: |
           echo $SLEEP
           date
