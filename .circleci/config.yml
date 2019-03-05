@@ -35,7 +35,7 @@ jobs:
   # vm jobs
   machine:
     machine: true
-    working_directory: /tmp/workspace/machine
+    working_directory: /tmp/workspace/
     steps:
       - run: |
           echo $SLEEP
@@ -43,10 +43,8 @@ jobs:
           sleep $SLEEP
           date
           echo 'Done sleeping.'
-      - run: |
-          echo 'machine works fine!' > result.txt
-      - store_artifacts:
-          path: /tmp/workspace/machine
+      - run:
+          echo -e 'export MACHINE = green\n' >> results.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
@@ -55,17 +53,25 @@ jobs:
 
   remote_docker:
     <<: *remote_docker_defaults
+    working_directory: /tmp/workspace/
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - run: which docker
       - run: docker -v
       - setup_remote_docker
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run:
+          echo -e 'export MACHINE = green\n' >> results.txt
 
   docker_layer_caching:
     <<: *remote_docker_defaults
+    working_directory: /tmp/workspace/
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - run: which docker
       - run: docker -v
       - setup_remote_docker:
@@ -73,16 +79,22 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run:
+          echo -e 'export MACHINE = green\n' >> results.txt
 
   machine_dlc:
     machine:
       docker_layer_caching: true
     steps:
+      - attach_workspace:
+          at: /tmp/workspace
       - run: which docker
       - run: docker -v
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run:
+          echo -e 'export MACHINE = green\n' >> results.txt
 
   vm_jobs_message:
     docker:
@@ -91,7 +103,9 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: ls -la
+      - run: |
+        ls -la
+        cat results.txt
   
 
 workflows:
