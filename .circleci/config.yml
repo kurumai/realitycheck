@@ -131,12 +131,10 @@ workflows:
             - machine
       - docker_layer_caching:
           requires:
-            - machine
+            - remote_docker
       - machine_dlc:
           requires:
-            - machine
+            - docker_layer_caching
       - vm_jobs_message:
           requires:
-            - remote_docker
-            - docker_layer_caching
             - machine_dlc
