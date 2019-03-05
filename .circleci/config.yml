@@ -59,7 +59,7 @@ jobs:
     steps:
       - persist_to_workspace:
           root: /tmp/workspace
-          paths: - .
+          paths: .
       - run: |
           echo $SLEEP
           date
@@ -108,7 +108,7 @@ jobs:
     working_directory: ~/realitycheck
     steps:
       - attach_workspace:
-        at: /tmp/workspace
+          at: /tmp/workspace
       - run: ls -la
   
 
@@ -224,9 +224,9 @@ workflows:
           - machine
       - vm_jobs_message
         requires:
-        - remote_docker
-        - docker_layer_caching
-        - machine_dlc
+          - remote_docker
+          - docker_layer_caching
+          - machine_dlc
 
   feature_jobs:
     jobs:
