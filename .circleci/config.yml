@@ -57,12 +57,17 @@ jobs:
   machine:
     machine: true
     steps:
+      - persist_to_workspace:
+        root: /tmp/workspace
+        path: - .
       - run: |
           echo $SLEEP
           date
           sleep $SLEEP
           date
           echo 'Done sleeping.'
+      - store_artifacts:
+        path: /tmp/workspace/machine
     environment:
       SLEEP: 1
 
@@ -96,6 +101,16 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+
+  vm_jobs_message:
+    docker:
+      - image: circleci/python
+    working_directory: ~/realitycheck
+    steps:
+      - attach_workspace:
+        at: /tmp/workspace
+      - run: ls -la
+  
 
   # feature jobs
   contexts:
@@ -199,8 +214,19 @@ workflows:
     jobs:
       - machine
       - remote_docker
+        requires:
+          - machine
       - docker_layer_caching
+        requires:
+          - machine
       - machine_dlc
+        requires:
+          - machine
+      - vm_jobs_message
+        requires:
+        - remote_docker
+        - docker_layer_caching
+        - machine_dlc
 
   feature_jobs:
     jobs:
