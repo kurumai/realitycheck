@@ -113,11 +113,13 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: check results |
-          if [ -e /tmp/workspace/results.txt ]; then
-            source /tmp/workspace/results.txt
-          fi
-          env | grep REALITYCHECK
+      - run:
+          name: check results
+          command: |
+            if [ -e /tmp/workspace/results.txt ]; then
+              source /tmp/workspace/results.txt
+            fi
+            env | grep REALITYCHECK
   
 
 workflows:
