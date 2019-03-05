@@ -35,7 +35,7 @@ jobs:
   # vm jobs
   machine:
     machine: true
-    working_directory: /tmp/workspace/
+    working_directory: /tmp/workspace/machine
     steps:
       - run: |
           echo $SLEEP
@@ -53,7 +53,7 @@ jobs:
 
   remote_docker:
     <<: *remote_docker_defaults
-    working_directory: /tmp/workspace/
+    working_directory: /tmp/workspace/remote_docker
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -71,7 +71,7 @@ jobs:
 
   docker_layer_caching:
     <<: *remote_docker_defaults
-    working_directory: /tmp/workspace/
+    working_directory: /tmp/workspace/docker_layer_caching
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -91,6 +91,7 @@ jobs:
   machine_dlc:
     machine:
       docker_layer_caching: true
+    working_directory: /tmp/workspace/machine_dlc
     steps:
       - attach_workspace:
           at: /tmp/workspace
@@ -114,7 +115,10 @@ jobs:
           at: /tmp/workspace
       - run: |
           ls -la
-          cat results.txt
+          cat machine/results.txt
+          cat remote_docker/results.txt
+          cat docker_layer_caching/results.txt
+          cat machine_dlc/results.txt
   
 
 workflows:
