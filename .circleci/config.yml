@@ -104,8 +104,8 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: |
-        ls -la
-        cat results.txt
+          ls -la
+          cat results.txt
   
 
 workflows:
