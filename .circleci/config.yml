@@ -44,7 +44,7 @@ jobs:
           date
           echo 'Done sleeping.'
       - run:
-          echo -e 'export MACHINE = green\n' >> results.txt
+          echo -e 'export REALITYCHECK_MACHINE=green\n' >> results.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
@@ -64,7 +64,7 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export REMOTE_DOCKER = green\n' >> results.txt
+          echo -e 'export REALITYCHECK_REMOTE_DOCKER=green\n' >> results.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
@@ -83,7 +83,7 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export DOCKER_LAYER_CACHING = green\n' >> results.txt
+          echo -e 'export REALITYCHECK_DOCKER_LAYER_CACHING=green\n' >> results.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
@@ -101,7 +101,7 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export MACHINE_DLC = green\n' >> results.txt
+          echo -e 'export REALITYCHECK_MACHINE_DLC=green\n' >> results.txt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
@@ -114,11 +114,19 @@ jobs:
       - attach_workspace:
           at: /tmp/workspace
       - run: |
-          ls -la
-          cat machine/results.txt
-          cat remote_docker/results.txt
-          cat docker_layer_caching/results.txt
-          cat machine_dlc/results.txt
+          if [ -e /tmp/workspace/machine/results.txt ]; then
+            source /tmp/workspace/machine/results.txt
+          fi
+          if [ -e /tmp/workspace/remote_docker/results.txt ]; then
+            source /tmp/workspace/remote_docker/results.txt
+          fi
+          if [ -e /tmp/workspace/docker_layer_caching/results.txt ]; then
+            source /tmp/workspace/docker_layer_caching/results.txt
+          fi
+          if [ -e /tmp/workspace/machine_dlc/results.txt ]; then
+            source /tmp/workspace/machine_dlc/results.txt
+          fi
+          env | grep REALITYCHECK
   
 
 workflows:
