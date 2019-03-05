@@ -64,7 +64,7 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export MACHINE = green\n' >> results.txt
+          echo -e 'export REMOTE_DOCKER = green\n' >> results.txt
 
   docker_layer_caching:
     <<: *remote_docker_defaults
@@ -80,7 +80,7 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export MACHINE = green\n' >> results.txt
+          echo -e 'export DOCKER_LAYER_CACHING = green\n' >> results.txt
 
   machine_dlc:
     machine:
@@ -94,12 +94,12 @@ jobs:
           <<: *basic_docker_build
       - run: docker version
       - run:
-          echo -e 'export MACHINE = green\n' >> results.txt
+          echo -e 'export MACHINE_DLC = green\n' >> results.txt
 
   vm_jobs_message:
     docker:
       - image: circleci/python
-    working_directory: ~/realitycheck
+    working_directory: /tmp/workspace
     steps:
       - attach_workspace:
           at: /tmp/workspace
