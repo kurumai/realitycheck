@@ -37,7 +37,6 @@ jobs:
     machine: true
     working_directory: /tmp/workspace/
     steps:
-      - run: circleci-agent step halt
       - run: |
           echo $SLEEP
           date
@@ -58,6 +57,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - setup_remote_docker
@@ -76,6 +76,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - setup_remote_docker:
@@ -96,6 +97,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
+      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - run:
@@ -119,9 +121,10 @@ jobs:
           command: |
             if [ -e /tmp/workspace/results.txt ]; then
               source /tmp/workspace/results.txt
+            else
+              echo "brabrabrabra...."
+              exit 1;
             fi
-            env | grep REALITYCHECK
-  
 
 workflows:
   version: 2
@@ -139,4 +142,7 @@ workflows:
             - machine
       - vm_jobs_message:
           requires:
-            - machine
+            - remote_docker
+            - docker_layer_caching
+            - machine_dlc
+            
