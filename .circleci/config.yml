@@ -103,6 +103,7 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
+      - run: exit 1
       - run:
           echo -e 'export REALITYCHECK_MACHINE_DLC=green\n' >> results.txt
       - persist_to_workspace:
@@ -125,6 +126,7 @@ jobs:
               echo "brabrabrabra...."
               exit 1;
             fi
+            env
 
 workflows:
   version: 2
