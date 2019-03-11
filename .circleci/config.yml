@@ -100,7 +100,6 @@ jobs:
       - run:
           <<: *basic_docker_build
       - run: docker version
-      - run: exit 1
       - run:
           echo -e 'export REALITYCHECK_MACHINE_DLC=green\n' >> results.txt
       - run:
