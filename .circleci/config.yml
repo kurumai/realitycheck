@@ -37,6 +37,7 @@ jobs:
     machine: true
     working_directory: /tmp/workspace/
     steps:
+      - run: circleci-agent step halt
       - run: |
           echo $SLEEP
           date
