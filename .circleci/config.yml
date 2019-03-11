@@ -103,7 +103,9 @@ jobs:
       - run: exit 1
       - run:
           echo -e 'export REALITYCHECK_MACHINE_DLC=green\n' >> results.txt
-      - run: circleci-agent step halt
+      - run:
+          command: circleci-agent step halt
+          when: on_fail
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
