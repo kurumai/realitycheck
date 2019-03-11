@@ -57,7 +57,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - setup_remote_docker
@@ -76,7 +75,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - setup_remote_docker:
@@ -97,7 +95,6 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: circleci-agent step halt
       - run: which docker
       - run: docker -v
       - run:
@@ -106,6 +103,7 @@ jobs:
       - run: exit 1
       - run:
           echo -e 'export REALITYCHECK_MACHINE_DLC=green\n' >> results.txt
+      - run: circleci-agent step halt
       - persist_to_workspace:
           root: /tmp/workspace
           paths: .
