@@ -41,5 +41,3 @@ workflows:
     jobs:
       - artifacts_test_results
       - parallelism
-            
-      
