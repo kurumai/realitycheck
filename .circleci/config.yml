@@ -43,6 +43,6 @@ workflows:
       - parallelism
       - parallelism:
           requires:
-            - parallelism
+            - artifacts_test_results
             
       
