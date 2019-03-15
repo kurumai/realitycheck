@@ -40,6 +40,6 @@ workflows:
   feature_jobs:
     jobs:
       - artifacts_test_results
-      - parallelism:
-          requires:
-            - artifacts_test_results
+      - parallelism
+      - parallelism
+      
