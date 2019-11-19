@@ -83,6 +83,7 @@ jobs:
       - run: docker -v
       - setup_remote_docker:
           docker_layer_caching: true
+      - run: sleep 60000
       - run:
           <<: *basic_docker_build
       - run: docker version
@@ -91,6 +92,7 @@ jobs:
     machine:
       docker_layer_caching: true
     steps:
+      - run: sleep 60000
       - run: which docker
       - run: docker -v
       - run:
@@ -187,30 +189,30 @@ jobs:
 
 workflows:
   version: 2
-  resource_class_jobs:
-    jobs:
-      - small
-      - medium
-      - medium+
-      - large
-      - xlarge
+  #resource_class_jobs:
+  #  jobs:
+  #    - small
+  #    - medium
+  #    - medium+
+  #    - large
+  #    - xlarge
 
   vm_jobs:
     jobs:
-      - machine
-      - remote_docker
+   #   - machine
+   #   - remote_docker
       - docker_layer_caching
       - machine_dlc
 
-  feature_jobs:
-    jobs:
-      - save_and_restore_cache
-      - contexts:
-          context: org-global
-      - multi-contexts:
-          context: individual-local
-      - write_workspace
-      - read_workspace:
-          requires:
-            - write_workspace
-      - artifacts_test_results
+  #feature_jobs:
+  #  jobs:
+  #    - save_and_restore_cache
+  #    - contexts:
+  #        context: org-global
+  #    - multi-contexts:
+  #        context: individual-local
+  #    - write_workspace
+  #    - read_workspace:
+  #        requires:
+  #          - write_workspace
+  #    - artifacts_test_results
