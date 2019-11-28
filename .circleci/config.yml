@@ -188,13 +188,13 @@ jobs:
 
 workflows:
   version: 2
-  resource_class_jobs:
-    jobs:
-      - small
-      - medium
-      - medium+
-      - large
-      - xlarge
+#  resource_class_jobs:
+#    jobs:
+#      - small
+#      - medium
+#      - medium+
+#      - large
+#      - xlarge
 
   vm_jobs:
     jobs:
