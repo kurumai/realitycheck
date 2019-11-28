@@ -82,10 +82,10 @@ jobs:
     steps:
       - run: which docker
       - run: docker -v
-      - run: sleep 600
+      - run: sleep 20s
       - setup_remote_docker:
           docker_layer_caching: true
-      - run: sleep 60000
+      - run: sleep 600s
       - run:
           <<: *basic_docker_build
       - run: docker version
