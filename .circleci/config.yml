@@ -1,6 +1,5 @@
 version: 2
 
-
 resource_job_defaults: &resource_job_defaults
   docker:  [{image: 'circleci/ruby:2.4.1'}]
   steps:
@@ -202,6 +201,7 @@ workflows:
       - remote_docker
       - docker_layer_caching
       - machine_dlc
+
 
 #  feature_jobs:
 #    jobs:
