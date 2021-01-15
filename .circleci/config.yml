@@ -15,10 +15,15 @@ resource_job_defaults: &resource_job_defaults
     - run:
         name: verify that job ran with the requested resource_class option
         command: |
+          if [ $CIRCLE_JOB = "medium-plus" ]; then
+            export $CIRCLE_JOB_NAME=medium+
+          else
+            export $CIRCLE_JOB_NAME=$CIRCLE_JOB
+          fi
           curl -k \
           "${CIRCLE_HOSTNAME%/}/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/$CIRCLE_BUILD_NUM?\
           circle-token=$CIRCLE_TOKEN" | \
-          jq '.picard.resource_class.class' | grep $CIRCLE_JOB
+          jq '.picard.resource_class.class' | grep $CIRCLE_JOB_NAME
 
 remote_docker_defaults: &remote_docker_defaults
   docker: [{image: 'docker:17.06-git'}]
