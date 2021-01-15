@@ -1,5 +1,8 @@
 version: 2.1
 
+orbs:
+  welcome: circleci/welcome-orb@0.4.1
+
 executors:
   resource_job_executor:
     parameters:
@@ -262,3 +265,6 @@ workflows:
             - write_workspace
       - artifacts_test_results
 
+  orbs:
+    jobs:
+      - welcome/run
